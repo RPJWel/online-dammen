@@ -10,7 +10,8 @@ var selected1 = null,
     p2Left = document.getElementById("checkersLeft2"),
     p1Captured = document.getElementById("checkersCaptured1"),
     p2Captured = document.getElementById("checkersCaptured2"),
-    turn = whites;
+    turn = whites,
+    recentSlag = null;
 
 // Setup the board when the document is fully loaded
 var main = function() {
@@ -64,7 +65,7 @@ var select = function() {
         selected2 = this;
         move();
         promote();
-        setNull();
+        setNull();        
         checkEnd();
         changeTurn();
     }
@@ -90,8 +91,12 @@ var changeTurn = function() {
 
 // Checks if the two selected tiles are valid and if so swaps the two
 var move = function() {
+
     if(valid()) {
         swap(selected1, selected2);
+    }
+    else {
+        changeTurn();
     }
 }
 
@@ -112,6 +117,7 @@ var setNull = function() {
 var valid = function() {
     // Check if there is a slag between the two selected tiles and execute it, when executed the turn ends
     if(slag(selected1, selected2)) {
+        changeTurn();
         return false;
     }
     
@@ -124,6 +130,9 @@ var valid = function() {
         if (selected2.innerHTML === "") {   // Check if selected2 is empty
             if(validSpace(selected1, selected2)) {  // Call validSpace to look if selected1 can move to selected2, if so return true;
                 return true;       
+            }
+            else {
+                return false;
             }
         }
         else {                              // When selected2 is occupied return false
@@ -335,6 +344,77 @@ var promote = function() {
         }
     }
 }
+
+// var checkSlag = function() {
+//     var checkID;
+
+//     if (turn === whites) {
+//         for(var i = 0; i < col.length; i++) {
+//             var occupied = col[i].getElementsByClassName("black");
+//             console.table(occupied);
+//             for(var a = 0; a < occupied.length; a++) {
+//                 if (occupied[a].innerHTML === whites) {
+//                     checkID = (occupied[a].id - -0.9).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                     checkID = (occupied[a].id - 0.9).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                     checkID = (occupied[a].id - -1.1).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                     checkID = (occupied[a].id - 1.1).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                 }
+//             }
+//         }
+//     }
+//     if (turn === blacks) {
+//         for(var i = 0; i < col.length; i++) {
+//             var occupied = col[i].getElementsByClassName("black");
+//             for(var a = 0; a < occupied.length; a++) {
+//                 if (occupied[a].innerHTML === blacks) {
+//                     checkID = (occupied[a].id - -0.9).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                     checkID = (occupied[a].id - 0.9).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                     checkID = (occupied[a].id - -1.1).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                     checkID = (occupied[a].id - 1.1).toFixed(1);
+//                     if(checkSpace(document.getElementById(checkID, turn))) {
+//                         console.log(document.getElementById(checkID));
+//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// var checkSpace = function(x, color) {
+//     if (color === whites) {
+//         if (x.innerHTML === blacks || x.innerHTML === pBlacks) {
+//             return true;
+//         }
+//     }
+//     if (color === blacks) {
+//         if (x.innerHTML === whites || x.innerHTML === pBlacks.whites) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
 
 // Run main when the document is loaded
 $(document).ready(main);
