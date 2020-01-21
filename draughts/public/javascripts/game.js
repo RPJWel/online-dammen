@@ -47,11 +47,16 @@ var select = function() {
     // Set selected1 to the first clicked item and border it
     if (selected1 === null) {
         selected1 = this;
-        if (selected1.innerHTML !== "") {   // If selected1 is occupied we can select it
+        if ((selected1.innerHTML === whites || selected1.innerHTML ===pWhites) && turn === whites && selected1.innerHTML !== "") {
             selected1.style.background = "rgba(255, 0, 0, 0.4)"
         }
         else {                              // Else set selected1 back to null
-            selected1 = null;
+            if ((selected1.innerHTML === blacks || selected1.innerHTML === pBlacks) && turn === blacks && selected1.innerHTML !== "" && selected1 !== null) {
+                selected1.style.background = "rgba(255, 0, 0, 0.4)"
+            }
+            else {
+                selected1 = null;
+            }
         }
     }
     else {  // When selected1 is initialized, set selected2 to the second clicked item and make calls
@@ -60,8 +65,27 @@ var select = function() {
         move();
         promote();
         setNull();
+        checkEnd();
+        changeTurn();
     }
 
+}
+
+// Look if the game has ended when either p1Left or p2Left = 0
+var checkEnd = function() {
+    if(parseInt(p1Left) === 0 || parseInt(p2Left) === 0) {
+        window.alert("Game over");
+    }
+}
+
+// Change turns when necessary
+var changeTurn = function() {
+    if (turn === whites) {
+        turn = blacks;
+    }
+    else {
+        turn = whites;
+    }
 }
 
 // Checks if the two selected tiles are valid and if so swaps the two
