@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--
+    The game screen, to layout https://wireframe.cc/GJLeVS
+-->
+<html>
+    <head>
+        <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+        <meta content="utf-8" http-equiv="encoding">
+        <title>A Matsko</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets\game.css">
+    </head>
+
+    <body>
+        <main>
+            <section id="title">
+                <img src="images/Dammen.png" alt="Lekker potje dammen" id=title2>
+            </section>
+            <section id="menu">
+                <form action="/mainMenu" method="get">
+                    <button type="submit" id="forfeit" class="button">
+                        <a href="Splash.html">Forfeit</a>
+                    </button>
+                </form>
+                <div id="switch">switch</div>
+            </section>
+
+            <section id="board">
+                <div id="col0" class="board">
+                    <span id="0.0" class="white"></span>
+                    <span id="0.1" class="black"></span>
+                    <span id="0.2" class="white"></span>
+                    <span id="0.3" class="black"></span>
+                    <span id="0.4" class="white"></span>
+                    <span id="0.5" class="black"></span>
+                    <span id="0.6" class="white"></span>
+                    <span id="0.7" class="black"></span>
+                    <span id="0.8" class="white"></span>
+                    <span id="0.9" class="black"></span>
+                </div>
+                <div id="col1" class="board">
+                   <span id="1.0" class="black"></span>
+                   <span id="1.1" class="white"></span>
+                   <span id="1.2" class="black"></span>
+                   <span id="1.3" class="white"></span>
+                   <span id="1.4" class="black"></span>
+                   <span id="1.5" class="white"></span>
+                   <span id="1.6" class="black"></span>
+                   <span id="1.7" class="white"></span>
+                   <span id="1.8" class="black"></span>
+                   <span id="1.9" class="white"></span>
+                </div>
+                <div id="col2" class="board">
+                    <span id="2.0" class="white"></span>
+                    <span id="2.1" class="black"></span>
+                    <span id="2.2" class="white"></span>
+                    <span id="2.3" class="black"></span>
+                    <span id="2.4" class="white"></span>
+                    <span id="2.5" class="black"></span>
+                    <span id="2.6" class="white"></span>
+                    <span id="2.7" class="black"></span>
+                    <span id="2.8" class="white"></span>
+                    <span id="2.9" class="black"></span>
+                </div>
+                <div id="col3" class="board">
+                    <span id="3.0" class="black"></span>
+                    <span id="3.1" class="white"></span>
+                    <span id="3.2" class="black"></span>
+                    <span id="3.3" class="white"></span>
+                    <span id="3.4" class="black"></span>
+                    <span id="3.5" class="white"></span>
+                    <span id="3.6" class="black"></span>
+                    <span id="3.7" class="white"></span>
+                    <span id="3.8" class="black"></span>
+                    <span id="3.9" class="white"></span>
+                </div>
+                <div id="col4" class="board">
+                    <span id="4.0" class="white"></span>
+                    <span id="4.1" class="black"></span>
+                    <span id="4.2" class="white"></span>
+                    <span id="4.3" class="black"></span>
+                    <span id="4.4" class="white"></span>
+                    <span id="4.5" class="black"></span>
+                    <span id="4.6" class="white"></span>
+                    <span id="4.7" class="black"></span>
+                    <span id="4.8" class="white"></span>
+                    <span id="4.9" class="black"></span>
+                </div>
+                <div id="col5" class="board">
+                    <span id="5.0" class="black"></span>
+                    <span id="5.1" class="white"></span>
+                    <span id="5.2" class="black"></span>
+                    <span id="5.3" class="white"></span>
+                    <span id="5.4" class="black"></span>
+                    <span id="5.5" class="white"></span>
+                    <span id="5.6" class="black"></span>
+                    <span id="5.7" class="white"></span>
+                    <span id="5.8" class="black"></span>
+                    <span id="5.9" class="white"></span>
+                </div>
+                <div id="col6" class="board">
+                    <span id="6.0" class="white"></span>
+                    <span id="6.1" class="black"></span>
+                    <span id="6.2" class="white"></span>
+                    <span id="6.3" class="black"></span>
+                    <span id="6.4" class="white"></span>
+                    <span id="6.5" class="black"></span>
+                    <span id="6.6" class="white"></span>
+                    <span id="6.7" class="black"></span>
+                    <span id="6.8" class="white"></span>
+                    <span id="6.9" class="black"></span>
+                </div>
+                <div id="col7" class="board">
+                    <span id="7.0" class="black"></span>
+                    <span id="7.1" class="white"></span>
+                    <span id="7.2" class="black"></span>
+                    <span id="7.3" class="white"></span>
+                    <span id="7.4" class="black"></span>
+                    <span id="7.5" class="white"></span>
+                    <span id="7.6" class="black"></span>
+                    <span id="7.7" class="white"></span>
+                    <span id="7.8" class="black"></span>
+                    <span id="7.9" class="white"></span>
+                </div>
+                <div id="col8" class="board">
+                    <span id="8.0" class="white"></span>
+                    <span id="8.1" class="black"></span>
+                    <span id="8.2" class="white"></span>
+                    <span id="8.3" class="black"></span>
+                    <span id="8.4" class="white"></span>
+                    <span id="8.5" class="black"></span>
+                    <span id="8.6" class="white"></span>
+                    <span id="8.7" class="black"></span>
+                    <span id="8.8" class="white"></span>
+                    <span id="8.9" class="black"></span>
+                </div>
+                <div id="col9" class="board">
+                    <span id="9.0" class="black"></span>
+                    <span id="9.1" class="white"></span>
+                    <span id="9.2" class="black"></span>
+                    <span id="9.3" class="white"></span>
+                    <span id="9.4" class="black"></span>
+                    <span id="9.5" class="white"></span>
+                    <span id="9.6" class="black"></span>
+                    <span id="9.7" class="white"></span>
+                    <span id="9.8" class="black"></span>
+                    <span id="9.9" class="white"></span>
+                </div>
+            </section>
+
+            <section id="player1">
+                <div id="checkersLeft1" class="checkers">
+                    Player 1 Left: <span id="val1">20</span>
+                </div>
+                <div id="checkersCaptured1" class="checkers">
+                    Player 1 Captured: <span id="val2">0</span>
+                </div>
+            </section>
+
+            <section id="player2">
+                <div id="checkersLeft2" class="checkers">
+                    Player 2 Left: <span id="val3">20</span>
+                </div>
+                <div id="checkersCaptured2" class="checkers">
+                    Player2 Captured: <span id="val4">0</span>
+                </div>
+            </section>
+
+            <section id="chat">
+                <div id="messages" class="chat">
+                    <span id="chatmsg">Chat messages will come here</span>
+                </div>
+                <div id="input" class="chatInput">
+                    <input type="text"><button>Send</button>
+                </div>
+            </section>
+
+        </main>
+        <img id="blackimg" src="images/Black draught.png">
+        <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script src="javascripts/game.js"></script>
+    </body>
+</html>

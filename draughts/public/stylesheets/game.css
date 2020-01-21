@@ -1,0 +1,95 @@
+body {
+    background-image: url('/public/images/Background.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#title {
+    border: 4px solid lightgray;
+    border-radius: 15px;
+    box-shadow: 20px 10px 5px rgb(124, 119, 119);
+    background-color: lightgray;
+    margin: 30px 180px;
+    text-align: center;
+    cursor: default;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+#blackimg {
+    display: none;
+}
+
+#board {
+height: 550px;
+width: 550px;
+left: 450px;
+top: 170px;
+position: absolute;
+border: 3px solid black;
+font-size: 0px;
+}
+
+.white {
+    border: 0px solid black;
+    background-color: rgb(238, 190, 101);
+    color: white;
+    font-size: 40px;
+    position: relative;
+    width: 55px;
+    height: 55px;
+    display: inline-block;
+    text-align: center;
+}
+
+.black {
+    border: 0px solid black;
+    background-color: rgb(194, 109, 61);
+    color: black;
+    font-size: 40px;
+    position: relative;
+    width: 55px;
+    height: 55px;
+    display: inline-block;
+    text-align: center;
+}
+
+.button {
+    background-color: lightgray;
+    border: 4px solid lightgray;
+    border-radius: 4px;
+    box-shadow: 6px 4px 2px rgb(124, 119, 119);
+    color: darkslategray;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    margin: 6px 4px;
+    padding: 0 16px;
+    line-height: 27px;
+    height: 36px;
+    min-width: 54px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+#chat {
+    box-sizing: border-box;
+    height: 500px;
+    width: 300px;
+    border: 8px solid gainsboro;
+    border-radius: 10px;
+    position: relative;
+    left: 1170px;
+    bottom: 100px;
+    background-color: white;
+}
+
+#input {
+    position: relative;
+    top: 440px;
+    left: 10px;
+}
