@@ -10,8 +10,7 @@ var selected1 = null,
     p2Left = document.getElementById("checkersLeft2"),
     p1Captured = document.getElementById("checkersCaptured1"),
     p2Captured = document.getElementById("checkersCaptured2"),
-    turn = whites,
-    recentSlag = null;
+    turn = whites;
 
 // Setup the board when the document is fully loaded
 var main = function() {
@@ -48,6 +47,8 @@ var select = function() {
     // Set selected1 to the first clicked item and border it
     if (selected1 === null) {
         selected1 = this;
+        checkSlag()
+        
         if ((selected1.innerHTML === whites || selected1.innerHTML ===pWhites) && turn === whites && selected1.innerHTML !== "") {
             selected1.style.background = "rgba(255, 0, 0, 0.4)"
         }
@@ -117,7 +118,8 @@ var setNull = function() {
 var valid = function() {
     // Check if there is a slag between the two selected tiles and execute it, when executed the turn ends
     if(slag(selected1, selected2)) {
-        changeTurn();
+        selected1 = null;
+        checkSlag();
         return false;
     }
     
@@ -181,37 +183,39 @@ var slag = function(draught1, draught2) {
         resID;
 
     // When the two selected are opposites execute the following conditionals and return true to prevent another move
-    if (draught1.innerHTML === whites && draught2.innerHTML === blacks || draught1.innerHTML === blacks && draught2.innerHTML === whites) {        
+if (draught1.innerHTML === whites && (draught2.innerHTML === blacks || draught2.innerHTML === pBlacks) || draught1.innerHTML === blacks && (draught2.innerHTML === whites || draught2.innerHTML === pWhites)) {        
         /*
             For every case where side is a diagonal of the first selected get the ID of the square in front of it and set it to resID
             Then get the square from the HTML with resID and put it in resSpace
             update the player counter of left and captured
             then execute the slag
         */
+        var execute = function(draught1, draught2, resID) {
+            resSpace = document.getElementById(resID);
+            if (doIt(draught1, draught2, resSpace)) {
+                selected1 = null;
+                selected2 = null;
+                select();
+                changeTurn();
+            }
+        }
+
         if (side === 9) {
             resID = (draught1.id - 1.8).toFixed(1);
-            resSpace = document.getElementById(resID);
-            update();
-            doIt(draught1, draught2, resSpace);
-            }
+            execute(draught1, draught2, resID);
+        }
 
         if (side === 11) {
             resID = (draught1.id - 2.2).toFixed(1);
-            resSpace = document.getElementById(resID);
-            update();
-            doIt(draught1, draught2, resSpace);
+            execute(draught1, draught2, resID);
         }
         if (side === -9) {
             resID = (draught1.id - -1.8).toFixed(1);
-            resSpace = document.getElementById(resID);
-            update();
-            doIt(draught1, draught2, resSpace);
+            execute(draught1, draught2, resID);
         }
         if (side === -11) {
             resID = (draught1.id - -2.2).toFixed(1);
-            resSpace = document.getElementById(resID);
-            update();
-            doIt(draught1, draught2, resSpace);
+            execute(draught1, draught2, resID);
         }
         return true;
     }
@@ -322,15 +326,23 @@ var update = function() {
 
 // make a slag when two regulare stones make a slag
 var doIt = function(sel1, sel2, sel3) {
-    if (sel3.innerHTML === "") {    // double check if sel3 is empty
+    if (sel3.innerHTML === "" && sel3.className === "black") {    // double check if sel3 is empty
+        update();
         swap(sel1, sel3);               // swap sel1 and sel3 making sel1 skip one diagonal space
         sel2.innerHTML = "";            // set sel2 to a blank space
         selected2 = sel3                // then set selected2 to sel3
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
 // When a stone reaches the end of the board, promoted them to a double
 var promote = function() {
+    if (selected2 === null) {
+        return;
+    }
     // When selected2 is white look if selected2.id begins with 0 for the end of the board
     if (selected2.innerHTML === whites) {
         if (Math.floor(selected2.id) === 0) {
@@ -345,76 +357,153 @@ var promote = function() {
     }
 }
 
-// var checkSlag = function() {
-//     var checkID;
+var checkSlag = function() {
+    var occupied = new Array
+    if (turn === whites) {
+        for(var i = 0; i < col.length; i++) {
+            occupied.push(col[i].getElementsByClassName("black"));
+        }
+        callID(occupied, turn);
+    }
+    if (turn === blacks) {
+        for(var i = 0; i < col.length; i++) {
+            occupied.push(col[i].getElementsByClassName("black"));
+        }
+        callID(occupied, turn);
+    }
+}
 
-//     if (turn === whites) {
-//         for(var i = 0; i < col.length; i++) {
-//             var occupied = col[i].getElementsByClassName("black");
-//             console.table(occupied);
-//             for(var a = 0; a < occupied.length; a++) {
-//                 if (occupied[a].innerHTML === whites) {
-//                     checkID = (occupied[a].id - -0.9).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                     checkID = (occupied[a].id - 0.9).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                     checkID = (occupied[a].id - -1.1).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                     checkID = (occupied[a].id - 1.1).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                 }
-//             }
-//         }
-//     }
-//     if (turn === blacks) {
-//         for(var i = 0; i < col.length; i++) {
-//             var occupied = col[i].getElementsByClassName("black");
-//             for(var a = 0; a < occupied.length; a++) {
-//                 if (occupied[a].innerHTML === blacks) {
-//                     checkID = (occupied[a].id - -0.9).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                     checkID = (occupied[a].id - 0.9).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                     checkID = (occupied[a].id - -1.1).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                     checkID = (occupied[a].id - 1.1).toFixed(1);
-//                     if(checkSpace(document.getElementById(checkID, turn))) {
-//                         console.log(document.getElementById(checkID));
-//                         occupied[a].style.background = "rgba(255, 0, 0, 0.5)"
-//                     }
-//                 }
-//             }
-//         }
-//     }
-// }
+var callID = function(occupied, turn) {
+    var checkID,
+        space = new Array;
+    for (var i = 0; i < occupied.length; i++) {
 
-// var checkSpace = function(x, color) {
-//     if (color === whites) {
-//         if (x.innerHTML === blacks || x.innerHTML === pBlacks) {
-//             return true;
-//         }
-//     }
-//     if (color === blacks) {
-//         if (x.innerHTML === whites || x.innerHTML === pBlacks.whites) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
+    for (var a = 0; a < occupied[i].length; a++) {
+        // console.log(occupied[i][a]);
+        if (occupied[i][a].innerHTML === turn) {
+            checkID = (occupied[i][a].id - -0.9).toFixed(1);
+            if(domain(checkID)) {
+                if(checkSpace(document.getElementById(checkID), turn, occupied[i][a].id)) {
+                    // console.log('1');
+                    space.push(occupied[i][a]);
+                }
+            }
+            checkID = (occupied[i][a].id - 0.9).toFixed(1);
+            if (domain(checkID)) {
+                if(checkSpace(document.getElementById(checkID), turn, occupied[i][a].id)) {
+                    // console.log('2');
+                    space.push(occupied[i][a]);
+                }
+            }
+            checkID = (occupied[i][a].id - -1.1).toFixed(1);
+            if (domain(checkID)) {
+                if(checkSpace(document.getElementById(checkID), turn, occupied[i][a].id)) {
+                    // console.log('3');
+                    space.push(occupied[i][a]);
+                }
+            }
+            checkID = (occupied[i][a].id - 1.1).toFixed(1);
+            if (domain(checkID)) {
+                if(checkSpace(document.getElementById(checkID), turn, occupied[i][a].id)) {
+                    // console.log('4');
+                    space.push(occupied[i][a]);
+                }
+            }
+        }
+        if (turn === whites) {
+            if (occupied[i][a].innerHTML === pWhites) {
+                
+            }
+
+        }
+        else {
+            if (occupied[i][a].innerHTML === pBlacks) {
+
+            }
+        }
+    }
+    }
+    styleIt(space);
+}
+
+var domain = function(x) {
+    if(x <= 0.9 || x >= 9.0) {
+        return false;
+    }
+    var dec = (x - Math.floor(x)).toFixed(1);
+
+    if(dec === 0.9 || dec === 0.0) {
+        return false;
+    }
+    return true
+}
+
+var styleIt = function(x) {
+    for (var i = 0; i < x.length; i++) {
+        x[i].style.background = "rgba(255, 0, 0, 0.5";
+        if (x[i] === selected1) {
+            x.forEach(e => {
+                e.style.background = "";
+            });
+            return;
+        }
+        else {
+            console.log(x.length);
+            if (i === x.length - 1) {
+                console.log(i, x.length);
+                selected1 = null;
+            }
+        }
+    }
+
+}
+
+var checkSpace = function(x, color, y) {
+    if (color === whites) {
+        if (x.innerHTML === blacks || x.innerHTML === pBlacks) {
+            if (checkRes(x, y)) {
+                return true;
+            }
+        }
+    }
+    if (color === blacks) {
+        if (x.innerHTML === whites || x.innerHTML === pBlacks.whites) {
+            if(checkRes(x, y)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+var checkRes = function(x, y) {
+    var res = null;
+    if ((x.id - 0.9).toFixed(1) === y) {
+        res = (x.id - -0.9).toFixed(1);
+        if (document.getElementById(res).innerHTML === "" && document.getElementById(res).className === "black") {
+            return true;
+        }
+    }
+    if ((x.id - -0.9).toFixed(1) === y) {
+        res = (x.id - 0.9).toFixed(1);
+        if (document.getElementById(res).innerHTML === "" && document.getElementById(res).className === "black") {
+            return true;
+        }
+    }
+    if ((x.id - 1.1).toFixed(1) === y) {
+        res = (x.id - -1.1).toFixed(1);
+        if (document.getElementById(res).innerHTML === "" && document.getElementById(res).className === "black") {
+            return true;
+        }
+    }
+    if ((x.id - -1.1).toFixed(1) === y) {
+        res = (x.id - 1.1).toFixed(1);
+        if (document.getElementById(res).innerHTML === "" && document.getElementById(res).className === "black") {
+            return true;
+        }
+    }
+    return false;
+}
 
 // Run main when the document is loaded
 $(document).ready(main);
